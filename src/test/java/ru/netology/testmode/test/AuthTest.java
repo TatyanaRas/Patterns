@@ -9,10 +9,10 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import static ru.netology.testmode.data.DataGenerator.Registration.getRegisteredUser;
-import static ru.netology.testmode.data.DataGenerator.Registration.getUser;
-import static ru.netology.testmode.data.DataGenerator.getRandomLogin;
-import static ru.netology.testmode.data.DataGenerator.getRandomPassword;
+import static ru.netology.testmode.test.data.DataGenerator.Registration.getUser;
+import static ru.netology.testmode.test.data.DataGenerator.getRandomLogin;
+import static ru.netology.testmode.test.data.DataGenerator.getRandomPassword;
+
 
 class AuthTest {
 
@@ -40,10 +40,10 @@ class AuthTest {
     @DisplayName("Should get error message if login with not registered user")
     void shouldGetErrorIfNotRegisteredUser() {
         var notRegisteredUser = getUser("active");
-        $("[data-test-id=login] input").setValue(notRegisteredUser.getlogin());
-        $("[data-test-id=password] input").setValue(notRegisteredUser.getpassword());
+        $("[data-test-id='login'] input").setValue(notRegisteredUser.getlogin());
+        $("[data-test-id='password'] input").setValue(notRegisteredUser.getpassword());
        $("button.button").click();
-       $( "[data-test-id = error-notification] .notification__content").shouldBe((Condition.visible)).shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15);
+       $( "[data-test-id='error-notification'] .notification__content").shouldBe((Condition.visible)).shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15));
         // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет
         //  незарегистрированного пользователя, для заполнения полей формы используйте пользователя notRegisteredUser
     }
@@ -55,7 +55,7 @@ class AuthTest {
         $("[data-test-id=login] input").setValue(blockedUser.getlogin());
         $("[data-test-id=password] input").setValue(blockedUser.getpassword());
         $("button.button").click();
-        $( "[data-test-id = error-notification] .notification__content").shouldBe((Condition.visible)).shouldHave(Condition.text("Ошибка! Пользователь заблокирован"), Duration.ofSeconds(15);
+        $( "[data-test-id = error-notification].notification__content").shouldBe((Condition.visible)).shouldHave(Condition.text("Ошибка! Пользователь заблокирован"), Duration.ofSeconds(15));
 
         // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет,
         //  заблокированного пользователя, для заполнения полей формы используйте пользователя blockedUser
@@ -69,7 +69,7 @@ class AuthTest {
         $("[data-test-id=login] input").setValue(wrongLogin());
         $("[data-test-id=password] input").setValue(registeredUser.getpassword());
         $("button.button").click();
-        $( "[data-test-id = error-notification] .notification__content").shouldBe((Condition.visible)).shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15);
+        $( "[data-test-id = error-notification] .notification__content").shouldBe((Condition.visible)).shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15));
         // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет с неверным
         //  логином, для заполнения поля формы "Логин" используйте переменную wrongLogin,
         //  "Пароль" - пользователя registeredUser
@@ -83,7 +83,7 @@ class AuthTest {
         $("[data-test-id=login] input").setValue(registeredUser.getLogin());
         $("[data-test-id=password] input").setValue(wrongPassword());
         $("button.button").click();
-        $( "[data-test-id = error-notification] .notification__content").shouldBe((Condition.visible)).shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15);
+        $( "[data-test-id = error-notification] .notification__content").shouldBe((Condition.visible)).shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15));
         // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет с неверным
         //  паролем, для заполнения поля формы "Логин" используйте пользователя registeredUser,
         //  "Пароль" - переменную wrongPassword
