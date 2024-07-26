@@ -7,9 +7,10 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import lombok.Value;
-import org.junit.jupiter.api.BeforeAll;
-
 import java.util.Locale;
+//import org.junit.jupiter.api.BeforeAll;
+
+
 
 import static io.restassured.RestAssured.given;
 
@@ -28,7 +29,7 @@ public class DataGenerator {
         // сам запрос
 
 
-    private static final Faker faker = new Faker(new Locale("en"));
+    private static final Faker FAKER = new Faker(new Locale("en"));
 
     private DataGenerator() {
     }
@@ -49,18 +50,19 @@ public class DataGenerator {
 
     }
 
-    public static String getRandomLogin(String locale) {
+    public static String getRandomLogin() {
         // TODO: добавить логику для объявления переменной login и задания её значения, для генерации
         //  случайного логина используйте faker
-        Faker faker = new Faker(new Locale(locale));
-        return faker.name().username();
-    }
 
-    public static String getRandomPassword(String locale) {
+        return FAKER.name().username();
+           }
+
+    public static String getRandomPassword() {
         // TODO: добавить логику для объявления переменной password и задания её значения, для генерации
         //  случайного пароля используйте faker
-        Faker faker = new Faker(new Locale(locale));
-        return faker.internet().password();
+
+        return FAKER.internet().password();
+
     }
 
     public static class Registration {
@@ -70,7 +72,8 @@ public class DataGenerator {
         public static RegistrationDto getUser(String status) {
             // TODO: создать пользователя user используя методы getRandomLogin(), getRandomPassword() и параметр status
 
-            return new RegistrationDto(getRandomLogin(), getRandomPassword(), status);
+
+            return new RegistrationDto(getRandomLogin(), getRandomPassword(),status);  //user;
         }
 
         public static RegistrationDto getRegisteredUser(String status) {
@@ -79,6 +82,7 @@ public class DataGenerator {
           var registeredUser = getUser(status);
            sendRequest(registeredUser);
            return registeredUser;
+            // return registeredUser.sendRequest(getUser(status));
         }
     }
 
