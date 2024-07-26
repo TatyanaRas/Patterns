@@ -8,7 +8,8 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import lombok.Value;
 import java.util.Locale;
-//import org.junit.jupiter.api.BeforeAll;
+
+import org.junit.jupiter.api.BeforeAll;
 
 
 
@@ -24,8 +25,8 @@ public class DataGenerator {
             .log(LogDetail.ALL)
             .build();
 
-   // @BeforeAll
- //   static void setUpAll() {
+  // @BeforeAll
+   // static void setUpAll() {
         // сам запрос
 
 
