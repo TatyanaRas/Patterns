@@ -8,14 +8,12 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import lombok.Value;
 import java.util.Locale;
-
-import org.junit.jupiter.api.BeforeAll;
-
-
-
+//import org.junit.jupiter.api.BeforeAll;
 import static io.restassured.RestAssured.given;
 
 public class DataGenerator {
+
+    //private static final Faker faker = new Faker(new Locale("en"));
 
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
@@ -25,25 +23,23 @@ public class DataGenerator {
             .log(LogDetail.ALL)
             .build();
 
-  // @BeforeAll
-   // static void setUpAll() {
-        // сам запрос
-
-
-    private static final Faker FAKER = new Faker(new Locale("en"));
+      private static final Faker faker = new Faker(new Locale("en"));
 
     private DataGenerator() {
     }
 
     private static void sendRequest(RegistrationDto user) {
-        Selenide.sleep(500);
+
+     //static DataGeneranor.RegistrationDto sendRequest(DataGenerator.RegistrationDto user){
+    Selenide.sleep(500);
         given() // "дано"
                 .spec(requestSpec) // указываем, какую спецификацию используем
-                .body(new RegistrationDto("vasya", "password", "active")) // передаём в теле объект, который будет преобразован в JSON
-                .when() // "когда"
+               // .body(new RegistrationDto("vasya", "password", "active")) // передаём в теле объект, который будет преобразован в JSON
+                .body(user)
+                .when().log().all() // "когда"
                 .post("/api/system/users") // на какой путь относительно BaseUri отправляем запрос
-                .then() // "тогда ожидаем"
-                .statusCode(200); // код 200 OK
+                .then().log().all() // "тогда ожидаем"
+                .statusCode(200);// код 200 OK
 
         // TODO: отправить запрос на указанный в требованиях path, передав в body запроса объект user
         //  и не забудьте передать подготовленную спецификацию requestSpec.
@@ -55,14 +51,14 @@ public class DataGenerator {
         // TODO: добавить логику для объявления переменной login и задания её значения, для генерации
         //  случайного логина используйте faker
 
-        return FAKER.name().username();
+        return DataGenerator.faker.name().username();
            }
 
     public static String getRandomPassword() {
         // TODO: добавить логику для объявления переменной password и задания её значения, для генерации
         //  случайного пароля используйте faker
 
-        return FAKER.internet().password();
+        return faker.internet().password();
 
     }
 
@@ -72,9 +68,9 @@ public class DataGenerator {
 
         public static RegistrationDto getUser(String status) {
             // TODO: создать пользователя user используя методы getRandomLogin(), getRandomPassword() и параметр status
-
-
-            return new RegistrationDto(getRandomLogin(), getRandomPassword(),status);  //user;
+var user = new RegistrationDto(getRandomLogin(), getRandomPassword(), status);
+return user;
+          //  return new RegistrationDto(getRandomLogin(), getRandomPassword(), status);  //user;
         }
 
         public static RegistrationDto getRegisteredUser(String status) {
